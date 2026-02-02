@@ -14,29 +14,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Remove old comparison selectors - now using new step-by-step flow
 
-// Complete operator data with standard prices
+// Operatörspriser – ordinarie nivåer enligt operatörernas hemsidor
 const operators = {
     'Telia': {
         name: 'Telia',
-        prices: { '5': 199, '10': 249, '20': 299, '30': 349, '50': 399, '100': 449, 'unlimited': 499 },
+        prices: { '5': 299, '10': 299, '20': 399, '30': 399, '50': 499, '100': 499, 'unlimited': 499 },
         coverage: 98,
         speed: '5G'
     },
     'Telenor': {
         name: 'Telenor',
-        prices: { '5': 179, '10': 229, '20': 279, '30': 329, '50': 379, '100': 429, 'unlimited': 479 },
+        prices: { '5': 299, '10': 299, '20': 299, '30': 399, '50': 399, '100': 399, 'unlimited': 449 },
         coverage: 97,
         speed: '5G'
     },
     'Tre': {
         name: 'Tre',
-        prices: { '5': 149, '10': 199, '20': 249, '30': 299, '50': 349, '100': 399, 'unlimited': 449 },
+        prices: { '5': 229, '10': 229, '20': 329, '30': 329, '50': 329, '100': 329, 'unlimited': 429 },
         coverage: 95,
         speed: '4G/5G'
     },
     'Tele2': {
         name: 'Tele2',
-        prices: { '5': 169, '10': 219, '20': 269, '30': 319, '50': 369, '100': 419, 'unlimited': 469 },
+        prices: { '5': 249, '10': 249, '20': 329, '30': 329, '50': 329, '100': 329, 'unlimited': 479 },
         coverage: 96,
         speed: '4G/5G'
     },
@@ -140,257 +140,10 @@ if (heroSection) {
     statObserver.observe(heroSection);
 }
 
-// Format phone number for PTS API (10 digits starting with 07)
-function formatPhoneForPTS(phoneNumber) {
-    // Remove +46, spaces, dashes, and any non-digit characters
-    let cleaned = phoneNumber.replace(/[\s\-+]/g, '').replace(/\D/g, '');
-    
-    // Remove leading 46 (country code) if present
-    if (cleaned.startsWith('46')) {
-        cleaned = cleaned.substring(2);
-    }
-    
-    // Ensure it starts with 07
-    if (!cleaned.startsWith('07')) {
-        // If it starts with 7, add leading 0
-        if (cleaned.startsWith('7')) {
-            cleaned = '0' + cleaned;
-        } else {
-            // If it doesn't start with 7, try to find 07 in the number
-            const sevenIndex = cleaned.indexOf('7');
-            if (sevenIndex > 0) {
-                cleaned = cleaned.substring(sevenIndex - 1);
-            } else {
-                // If no 7 found, prepend 07
-                cleaned = '07' + cleaned;
-            }
-        }
-    }
-    
-    // Ensure it's exactly 10 digits starting with 07
-    if (cleaned.startsWith('07') && cleaned.length > 10) {
-        // Take first 10 digits
-        cleaned = cleaned.substring(0, 10);
-    } else if (cleaned.startsWith('07') && cleaned.length < 10) {
-        // Pad with zeros if needed (shouldn't happen, but just in case)
-        cleaned = cleaned.padEnd(10, '0');
-    }
-    
-    // Final validation: must be 10 digits starting with 07
-    if (cleaned.startsWith('07') && cleaned.length === 10 && /^\d{10}$/.test(cleaned)) {
-        return cleaned;
-    }
-    
-    return null;
-}
-
-// Detect operator from phone number using PTS API
-async function detectOperator(phoneNumber) {
-    try {
-        const formattedNumber = formatPhoneForPTS(phoneNumber);
-        
-        if (!formattedNumber || formattedNumber.length !== 10 || !formattedNumber.startsWith('07')) {
-            return null;
-        }
-        
-        // PTS API endpoint
-        // Note: PTS API has CORS restrictions, so we need to use a CORS proxy
-        // or implement a backend proxy endpoint
-        const apiUrl = `https://nummer.pts.se/NbrSearch?number=${formattedNumber}`;
-        
-        // Try using a CORS proxy service or direct fetch
-        // Using allorigins.win as a CORS proxy (you may want to set up your own)
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
-        
-        try {
-            const response = await fetch(proxyUrl, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                }
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                // allorigins returns the content in a 'contents' field
-                if (data.contents) {
-                    const html = data.contents;
-                    // Parse HTML response to extract operator name
-                    const operator = parsePTSResponse(html);
-                    if (operator) {
-                        return mapPTSToOperator(operator);
-                    }
-                }
-            }
-        } catch (proxyError) {
-            console.log('Proxy error, trying direct fetch:', proxyError);
-            
-            // Try direct fetch (will likely fail due to CORS, but worth trying)
-            try {
-                const directResponse = await fetch(apiUrl, {
-                    method: 'GET',
-                    mode: 'no-cors', // This won't give us the response, but we try
-                });
-            } catch (directError) {
-                console.log('Direct fetch also failed:', directError);
-            }
-        }
-        
-        // IMPORTANT: If PTS API fails, we should NOT use fallback
-        // because prefix-based detection is inaccurate due to number portability
-        // Instead, return null and let user know they need to select manually
-        console.warn('PTS API unavailable, cannot accurately detect operator');
-        return null;
-        
-    } catch (error) {
-        console.error('Error detecting operator:', error);
-        // Don't use fallback - prefix detection is unreliable
-        return null;
-    }
-}
-
-// Parse PTS HTML response to extract operator name
-function parsePTSResponse(html) {
-    // PTS returns HTML, we need to parse it
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    
-    // Look for operator name in various possible locations
-    // PTS typically shows operator in a table or specific div
-    const operatorSelectors = [
-        '[data-operator]',
-        '.operator',
-        '.operator-name',
-        'td.operator',
-        'th.operator',
-        '[class*="operator"]',
-        '[id*="operator"]'
-    ];
-    
-    for (const selector of operatorSelectors) {
-        const elements = doc.querySelectorAll(selector);
-        for (const element of elements) {
-            const text = element.textContent.trim();
-            if (text && text.length > 0 && text.length < 50) {
-                // Check if it contains an operator name
-                const operators = ['Telia', 'Telenor', 'Tele2', 'Tre', 'Hallon', 'Vimla', 'Comviq', 'Fello', 'Halebop'];
-                for (const op of operators) {
-                    if (text.includes(op)) {
-                        return op;
-                    }
-                }
-            }
-        }
-    }
-    
-    // Try to find in all table cells and divs
-    const allElements = doc.querySelectorAll('td, th, div, span, p');
-    for (const element of allElements) {
-        const text = element.textContent.trim();
-        // Look for operator names in the text
-        const operators = ['Telia', 'Telenor', 'Tele2', 'Tre', 'Hallon', 'Vimla', 'Comviq', 'Fello', 'Halebop'];
-        for (const op of operators) {
-            // Check if text contains operator name (but not as part of a longer word)
-            const regex = new RegExp(`\\b${op}\\b`, 'i');
-            if (regex.test(text) && text.length < 100) {
-                return op;
-            }
-        }
-    }
-    
-    // Last resort: search in raw HTML
-    const operators = ['Telia', 'Telenor', 'Tele2', 'Tre', 'Hallon', 'Vimla', 'Comviq', 'Fello', 'Halebop'];
-    for (const op of operators) {
-        const regex = new RegExp(`\\b${op}\\b`, 'i');
-        if (regex.test(html)) {
-            // Try to extract context around the operator name
-            const match = html.match(new RegExp(`([^<>]*${op}[^<>]*)`, 'i'));
-            if (match && match[1]) {
-                const context = match[1].trim();
-                if (context.length < 100) {
-                    return op;
-                }
-            }
-        }
-    }
-    
-    return null;
-}
-
-// Map PTS operator names to our operator names
-function mapPTSToOperator(ptsOperator) {
-    const operatorMap = {
-        'Telia': 'Telia',
-        'Telenor': 'Telenor',
-        'Tele2': 'Tele2',
-        'Tre': 'Tre',
-        '3': 'Tre',
-        'Hallon': 'Hallon',
-        'Vimla': 'Vimla',
-        'Comviq': 'Comviq',
-        'Fello': 'Fello',
-        'Halebop': 'Halebop',
-        'Halebop (Telia)': 'Halebop',
-        'Vimla (Telenor)': 'Vimla',
-        'Hallon (Tre)': 'Hallon',
-        'Fello (Tele2)': 'Fello'
-    };
-    
-    // Try exact match first
-    if (operatorMap[ptsOperator]) {
-        return operatorMap[ptsOperator];
-    }
-    
-    // Try case-insensitive match
-    const lowerOperator = ptsOperator.toLowerCase();
-    for (const [key, value] of Object.entries(operatorMap)) {
-        if (key.toLowerCase() === lowerOperator) {
-            return value;
-        }
-    }
-    
-    return null;
-}
-
-// Fallback: Detect operator by prefix (if PTS API fails)
-// NOTE: This is a fallback only - PTS API should be used for accurate results
-// Prefix mapping may not be 100% accurate as number portability exists
-function detectOperatorByPrefix(phoneNumber) {
-    // Ensure we have a properly formatted number
-    const formatted = formatPhoneForPTS(phoneNumber);
-    if (!formatted) {
-        return null;
-    }
-    
-    // Swedish mobile number prefixes (first 3 digits of 07X)
-    // Note: Due to number portability, prefix-based detection is not always accurate
-    const prefixMap = {
-        '070': 'Telia',
-        '071': 'Telenor',
-        '072': 'Telenor',
-        '073': 'Tele2',
-        '074': 'Telenor',
-        '075': 'Telia',
-        '076': 'Tele2', // Updated: 076 is Tele2, not Telenor
-        '079': 'Telenor'
-    };
-    
-    // Check 3-digit prefix (07X)
-    if (formatted.length >= 3) {
-        const prefix = formatted.substring(0, 3);
-        if (prefixMap[prefix]) {
-            return prefixMap[prefix];
-        }
-    }
-    
-    return null;
-}
-
 // Step 1: Select operator
 let selectedOperator = null;
 const step1Form = document.getElementById('step1-form');
 const step2Form = document.getElementById('step2-form');
-const phoneForm = document.getElementById('phone-form');
 const operatorButtons = document.querySelectorAll('.operator-btn');
 const step1Btn = document.getElementById('step1-btn');
 
@@ -400,150 +153,31 @@ operatorButtons.forEach(btn => {
         this.classList.add('active');
         selectedOperator = this.dataset.operator;
         step1Btn.disabled = false;
-        // Hide detected operator badge if manually selected
-        document.getElementById('detected-operator').style.display = 'none';
     });
-});
-
-
-// Phone number detection (inline in step 1)
-const phoneInputInline = document.getElementById('phone-number-inline');
-const phoneDetectInlineBtn = document.getElementById('phone-detect-inline-btn');
-
-phoneDetectInlineBtn.addEventListener('click', async () => {
-    const phoneNumber = phoneInputInline.value.trim();
-    if (!phoneNumber) {
-        alert('Vänligen ange ditt telefonnummer');
-        return;
-    }
-    
-    // Show loading state
-    phoneDetectInlineBtn.disabled = true;
-    phoneDetectInlineBtn.innerHTML = '<span>Söker...</span>';
-    
-    try {
-        const detected = await detectOperator(phoneNumber);
-        
-        if (detected) {
-            selectedOperator = detected;
-            // Show detected operator and select it
-            document.getElementById('detected-operator-name').textContent = detected;
-            document.getElementById('detected-operator').style.display = 'block';
-            
-            // Auto-select the operator button
-            const operatorBtn = document.querySelector(`.operator-btn[data-operator="${detected}"]`);
-            if (operatorBtn) {
-                operatorButtons.forEach(b => b.classList.remove('active'));
-                operatorBtn.classList.add('active');
-                step1Btn.disabled = false;
-            }
-            
-            // Clear phone input
-            phoneInputInline.value = '';
-        } else {
-            alert('Kunde inte identifiera operatör från numret via PTS. Vänligen välj din operatör manuellt ovan. (PTS API kräver en backend-proxy för att fungera korrekt)');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Ett fel uppstod vid sökning. Välj manuellt ovan.');
-    } finally {
-        // Reset button state
-        phoneDetectInlineBtn.disabled = false;
-        phoneDetectInlineBtn.innerHTML = `
-            <span>Hitta min operatör</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        `;
-    }
-});
-
-phoneInputInline.addEventListener('keypress', async (e) => {
-    if (e.key === 'Enter') {
-        await phoneDetectInlineBtn.click();
-    }
-});
-
-// Phone number detection (separate form)
-const phoneInput = document.getElementById('phone-number');
-const phoneDetectBtn = document.getElementById('phone-detect-btn');
-const phoneBackBtn = document.getElementById('phone-back-btn');
-
-phoneDetectBtn.addEventListener('click', async () => {
-    const phoneNumber = phoneInput.value.trim();
-    if (!phoneNumber) {
-        alert('Vänligen ange ditt telefonnummer');
-        return;
-    }
-    
-    // Show loading state
-    phoneDetectBtn.disabled = true;
-    phoneDetectBtn.innerHTML = '<span>Söker...</span>';
-    
-    try {
-        const detected = await detectOperator(phoneNumber);
-        
-        if (detected) {
-            selectedOperator = detected;
-            // Show detected operator and go back to step 1
-            document.getElementById('detected-operator-name').textContent = detected;
-            document.getElementById('detected-operator').style.display = 'block';
-            
-            // Auto-select the operator button
-            const operatorBtn = document.querySelector(`.operator-btn[data-operator="${detected}"]`);
-            if (operatorBtn) {
-                operatorButtons.forEach(b => b.classList.remove('active'));
-                operatorBtn.classList.add('active');
-                step1Btn.disabled = false;
-            }
-            
-            phoneForm.classList.add('hidden');
-            step1Form.classList.remove('hidden');
-        } else {
-            alert('Kunde inte identifiera operatör från numret. Välj manuellt nedan.');
-            phoneForm.classList.add('hidden');
-            step1Form.classList.remove('hidden');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Ett fel uppstod vid sökning. Välj manuellt nedan.');
-        phoneForm.classList.add('hidden');
-        step1Form.classList.remove('hidden');
-    } finally {
-        // Reset button state
-        phoneDetectBtn.disabled = false;
-        phoneDetectBtn.innerHTML = `
-            <span>Hitta min operatör</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        `;
-    }
-});
-
-phoneInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        phoneDetectBtn.click();
-    }
-});
-
-phoneBackBtn.addEventListener('click', () => {
-    phoneForm.classList.add('hidden');
-    step1Form.classList.remove('hidden');
 });
 
 step1Btn.addEventListener('click', () => {
     if (!selectedOperator) return;
     step1Form.classList.add('hidden');
     step2Form.classList.remove('hidden');
-    // Reset data selection
     selectedDataAmount = null;
     dataInput.value = '';
     dataOptionButtons.forEach(btn => btn.classList.remove('active'));
     step2Btn.disabled = true;
+    setTimeout(() => {
+        step2Form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        dataInput.focus({ preventScroll: true });
+    }, 100);
 });
 
-// Step 2: Input data amount
+// Enter on step 1 (operator selected) goes to step 2
+document.getElementById('step1-form')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && selectedOperator && !step1Form.classList.contains('hidden')) {
+        e.preventDefault();
+        step1Btn.click();
+    }
+});
+
 // Step 2: Input data amount
 let selectedDataAmount = null;
 const step2BackBtn = document.getElementById('step2-back');
@@ -553,44 +187,44 @@ const dataUnlimitedBtn = document.getElementById('data-unlimited-btn');
 const dataUnknownBtn = document.getElementById('data-unknown-btn');
 const dataOptionButtons = document.querySelectorAll('.data-option-btn');
 
+function clearDataSelectionUI() {
+    dataOptionButtons.forEach(btn => btn.classList.remove('active'));
+}
+
 step2BackBtn.addEventListener('click', () => {
     step2Form.classList.add('hidden');
     step1Form.classList.remove('hidden');
-    // Reset selections
     selectedDataAmount = null;
     dataInput.value = '';
-    dataOptionButtons.forEach(btn => btn.classList.remove('active'));
-    // Keep operator selected
+    clearDataSelectionUI();
     if (selectedOperator) {
         const selectedBtn = document.querySelector(`.operator-btn[data-operator="${selectedOperator}"]`);
-        if (selectedBtn) {
-            selectedBtn.classList.add('active');
-        }
+        if (selectedBtn) selectedBtn.classList.add('active');
     }
 });
 
-// Handle data option buttons
+// Handle data option buttons (Obegränsat, Vet inte)
 dataUnlimitedBtn.addEventListener('click', function() {
-    dataOptionButtons.forEach(btn => btn.classList.remove('active'));
+    clearDataSelectionUI();
     this.classList.add('active');
-    selectedDataAmount = 1000; // Use 1000 for unlimited
+    selectedDataAmount = 1000;
     dataInput.value = '';
     step2Btn.disabled = false;
 });
 
 dataUnknownBtn.addEventListener('click', function() {
-    dataOptionButtons.forEach(btn => btn.classList.remove('active'));
+    clearDataSelectionUI();
     this.classList.add('active');
-    selectedDataAmount = 50; // Use average/default (50 GB)
+    selectedDataAmount = 50;
     dataInput.value = '';
     step2Btn.disabled = false;
 });
 
 // Handle manual input
 dataInput.addEventListener('input', function() {
-    const value = parseInt(this.value);
+    const value = parseInt(this.value, 10);
     if (value && value > 0) {
-        dataOptionButtons.forEach(btn => btn.classList.remove('active'));
+        clearDataSelectionUI();
         selectedDataAmount = value;
         step2Btn.disabled = false;
     } else if (!this.value) {
@@ -601,17 +235,33 @@ dataInput.addEventListener('input', function() {
 
 dataInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && selectedDataAmount) {
+        e.preventDefault();
         step2Btn.click();
     }
 });
 
-step2Btn.addEventListener('click', () => {
+// Enter on step 2 submits
+document.getElementById('step2-form')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && selectedDataAmount && !e.target.matches('input[type="number"]')) {
+        e.preventDefault();
+        step2Btn.click();
+    }
+});
+
+step2Btn.addEventListener('click', async () => {
     if (!selectedDataAmount) {
         alert('Vänligen välj eller ange din surfmängd');
         return;
     }
-    
+    // Loading state
+    const btnLabel = step2Btn.querySelector('span');
+    const originalHtml = step2Btn.innerHTML;
+    step2Btn.disabled = true;
+    step2Btn.innerHTML = '<span>Beräknar...</span>';
+    await new Promise(r => setTimeout(r, 450));
     showResults(selectedOperator, selectedDataAmount);
+    step2Btn.disabled = false;
+    step2Btn.innerHTML = originalHtml;
 });
 
 // Show results
@@ -636,6 +286,7 @@ function showResults(operatorName, dataAmount) {
     
     resultsContainer.innerHTML = '';
     resultsContainer.classList.remove('hidden');
+    step2Form.classList.add('hidden');
     
     // Current price display - Improved design
     const currentPriceCard = document.createElement('div');
@@ -666,7 +317,7 @@ function showResults(operatorName, dataAmount) {
     `;
     resultsContainer.appendChild(currentPriceCard);
     
-    // Warning message with call-to-action - Improved design
+    // Warning block "Du betalar lite för mycket" – tydligare, med formulär Bli uppringd
     const warningCard = document.createElement('div');
     warningCard.className = 'warning-card';
     warningCard.innerHTML = `
@@ -697,19 +348,65 @@ function showResults(operatorName, dataAmount) {
                         <span>Ingen bindningstid</span>
                     </div>
                 </div>
-                <button class="cta-primary large" id="contact-btn">
-                    <span>Bli uppringd för ett bättre erbjudande</span>
+                <div class="warning-callback-form">
+                    <h4 class="warning-callback-title">Bli uppringd</h4>
+                    <p class="warning-callback-desc">Fyll i så ringer vi upp dig med ett bättre erbjudande.</p>
+                    <form id="callback-form" class="callback-form">
+                        <div class="callback-field">
+                            <label for="callback-fornamn">Förnamn</label>
+                            <input type="text" id="callback-fornamn" name="fornamn" placeholder="T.ex. Anna" required autocomplete="given-name">
+                        </div>
+                        <div class="callback-field">
+                            <label for="callback-mobil">Mobilnummer</label>
+                            <div class="callback-phone-wrap">
+                                <span class="callback-prefix">+46</span>
+                                <input type="tel" id="callback-mobil" name="mobil" placeholder="70 123 45 67" required autocomplete="tel" maxlength="12">
+                            </div>
+                        </div>
+                        <button type="submit" class="cta-primary large" id="contact-btn">
+                            <span>Bli uppringd</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                <button type="button" class="btn-secondary btn-edit" id="edit-from-results-btn">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.667 3.333H3.333A1.667 1.667 0 0 0 1.667 5v11.667A1.667 1.667 0 0 0 3.333 18.333h11.667A1.667 1.667 0 0 0 16.667 16.667V8.333L11.667 3.333z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M11.667 3.333v5h5M15 18.333H5M8.333 9.167h5M8.333 12.5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
+                    <span>Ändra uppgifter</span>
                 </button>
             </div>
         </div>
     `;
     resultsContainer.appendChild(warningCard);
     
-    document.getElementById('contact-btn')?.addEventListener('click', () => {
-        alert('Tack! Vi ringer upp dig snart med ett bättre erbjudande.');
+    document.getElementById('callback-form')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fornamn = document.getElementById('callback-fornamn').value.trim();
+        const mobil = document.getElementById('callback-mobil').value.trim();
+        if (!fornamn || !mobil) return;
+        alert('Tack ' + fornamn + '! Vi ringer upp dig på ' + mobil + ' snart med ett bättre erbjudande.');
+    });
+    
+    document.getElementById('edit-from-results-btn')?.addEventListener('click', () => {
+        resultsContainer.classList.add('hidden');
+        resultsContainer.innerHTML = '';
+        step2Form.classList.remove('hidden');
+        step1Form.classList.add('hidden');
+        if (dataAmount >= 1000) {
+            dataInput.value = '';
+            clearDataSelectionUI();
+            dataUnlimitedBtn.classList.add('active');
+        } else {
+            dataInput.value = dataAmount;
+            clearDataSelectionUI();
+        }
+        selectedDataAmount = dataAmount;
+        step2Btn.disabled = false;
+        step2Form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
     
     // Scroll to results

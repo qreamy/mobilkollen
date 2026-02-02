@@ -43,6 +43,29 @@ body {
     font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
+/* Hoppa till innehåll – tillgänglighet (visas nedtill vid Tab) */
+.skip-link {
+    position: fixed;
+    bottom: -4rem;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.75rem 1.25rem;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 12px 12px 0 0;
+    text-decoration: none;
+    transition: bottom 0.25s ease;
+    box-shadow: 0 -4px 20px rgba(0, 206, 120, 0.25);
+}
+
+.skip-link:focus {
+    bottom: 0;
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 2px;
+}
+
 /* Premium Navigation */
 .navbar {
     position: fixed;
@@ -127,6 +150,17 @@ body {
     background: var(--primary-dark);
     transform: translateY(-1px);
     box-shadow: var(--shadow-primary);
+}
+
+.nav-cta:focus-visible {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 3px;
+}
+
+.nav-links a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: 6px;
 }
 
 /* Hero Section - Premium Design */
@@ -842,6 +876,190 @@ section.visible {
     display: none;
 }
 
+/* Operator plans view (ordinarie prisplaner) */
+.operator-plans-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.operator-plans-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.operator-plans-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.operator-plans-banner {
+    background: linear-gradient(135deg, #3d2c5c 0%, #2a1f42 100%);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.operator-plans-banner.hidden {
+    display: none !important;
+}
+
+.operator-plans-banner-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.operator-plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.plan-card {
+    background: linear-gradient(135deg, #fff 0%, #fafbfc 100%);
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 24px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.plan-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 206, 120, 0.15);
+}
+
+.plan-card-promo {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 0.75rem;
+    border-radius: 10px;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.plan-card-title {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 1rem 0;
+    padding-right: 6rem;
+}
+
+.plan-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+.plan-card-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.plan-card-features li svg {
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+.plan-card-promo-box {
+    background: rgba(0, 206, 120, 0.08);
+    border: 1px solid rgba(0, 206, 120, 0.2);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.plan-card-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.plan-card-price-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.plan-card-binding {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.plan-card-cta {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 206, 120, 0.3);
+}
+
+.plan-card-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 206, 120, 0.35);
+}
+
+.operator-plans-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid rgba(226, 232, 240, 0.6);
+}
+
+.operator-plans-link {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.operator-plans-link:hover {
+    text-decoration: underline;
+}
+
+.operator-plans-actions .btn-back-plans {
+    margin-top: 0.5rem;
+}
+
 .form-progress {
     display: flex;
     align-items: center;
@@ -1003,6 +1221,11 @@ section.visible {
     color: white;
 }
 
+.operator-btn:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+}
+
 .data-input-wrapper {
     padding: 2.25rem 2rem;
     background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
@@ -1115,6 +1338,11 @@ section.visible {
     transform: translateY(-6px) scale(1.05);
 }
 
+.data-option-btn:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+}
+
 
 .phone-input-wrapper {
     display: flex;
@@ -1170,94 +1398,6 @@ section.visible {
     font-weight: 500;
 }
 
-.phone-hint {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-.phone-divider {
-    text-align: center;
-    margin: 2.5rem 0;
-    position: relative;
-}
-
-.phone-divider::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--border);
-}
-
-.phone-divider span {
-    position: relative;
-    background: white;
-    padding: 0 1.5rem;
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    font-weight: 600;
-}
-
-.phone-section-inline {
-    margin-top: 2rem;
-    padding-top: 0;
-}
-
-.phone-input-inline-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.phone-input-inline-wrapper .phone-input-wrapper {
-    flex: 1;
-    min-width: 250px;
-    max-width: 400px;
-    margin: 0;
-}
-
-.phone-detect-inline-btn {
-    flex-shrink: 0;
-    padding: 1.25rem 2rem;
-    white-space: nowrap;
-}
-
-.detected-operator {
-    margin-bottom: 2rem;
-    animation: fadeInDown 0.5s ease-out;
-}
-
-.detected-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.75rem;
-    background: linear-gradient(135deg, var(--primary-ultra-light) 0%, rgba(0, 206, 120, 0.1) 100%);
-    border: 2px solid var(--primary);
-    border-radius: 16px;
-    color: var(--primary);
-    font-size: 1rem;
-    font-weight: 700;
-    box-shadow: 0 4px 12px rgba(0, 206, 120, 0.15);
-}
-
-.detected-badge svg {
-    flex-shrink: 0;
-}
-
-.detected-badge strong {
-    color: var(--primary-dark);
-}
-
 .form-actions {
     display: flex;
     gap: 1.5rem;
@@ -1290,6 +1430,16 @@ section.visible {
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0, 206, 120, 0.2), 0 4px 12px rgba(0, 206, 120, 0.15);
     background: white;
+}
+
+.btn-secondary:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.warning-content .btn-edit {
+    margin-top: 1rem;
+    display: inline-flex;
 }
 
 .option-grid {
@@ -1473,6 +1623,16 @@ section.visible {
     cursor: not-allowed;
 }
 
+.compare-btn:focus-visible:not(:disabled) {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 3px;
+}
+
+.cta-primary:focus-visible {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 3px;
+}
+
 .results-container {
     display: grid;
     gap: 2rem;
@@ -1616,11 +1776,11 @@ section.visible {
 }
 
 .warning-card {
-    background: linear-gradient(135deg, #FFF8E6 0%, #FFFBF0 100%);
-    border: 2.5px solid #FFB020;
+    background: linear-gradient(135deg, #FFF4D6 0%, #FFE8B8 50%, #FFF4D6 100%);
+    border: 3px solid #E69500;
     border-radius: 32px;
-    padding: 4rem;
-    box-shadow: 0 16px 40px rgba(255, 176, 32, 0.2);
+    padding: 3rem 4rem;
+    box-shadow: 0 20px 56px rgba(230, 149, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.08);
     margin-bottom: 2.5rem;
     position: relative;
     overflow: hidden;
@@ -1632,8 +1792,8 @@ section.visible {
     top: 0;
     left: 0;
     right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #FFB020 0%, #FFD700 50%, #FFB020 100%);
+    height: 6px;
+    background: linear-gradient(90deg, #E69500 0%, #FFB020 50%, #FFD700 100%);
     background-size: 200% 100%;
     animation: gradientShift 3s ease infinite;
 }
@@ -1688,19 +1848,106 @@ section.visible {
 }
 
 .warning-title {
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: #1a1a1a;
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
 }
 
 .warning-text {
-    font-size: 1.125rem;
+    font-size: 1.2rem;
     color: var(--text-secondary);
     line-height: 1.75;
-    margin-bottom: 2rem;
-    font-weight: 400;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* Bli uppringd-formulär i varningsblocket */
+.warning-callback-form {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    border: 2px solid rgba(230, 149, 0, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.warning-callback-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.warning-callback-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem 0;
+}
+
+.callback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 360px;
+}
+
+.callback-field label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.callback-field input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--border-light);
+    border-radius: 14px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.callback-field input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 206, 120, 0.15);
+}
+
+.callback-phone-wrap {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--border-light);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.callback-phone-wrap:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 206, 120, 0.15);
+}
+
+.callback-prefix {
+    padding: 1rem 1rem;
+    background: var(--bg-alt);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.callback-phone-wrap input {
+    flex: 1;
+    border: none;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+}
+
+.callback-phone-wrap input:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .warning-text strong {
@@ -2028,26 +2275,65 @@ section.visible {
 
 /* Footer */
 .footer {
-    background: var(--bg);
+    position: relative;
+    background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg-section) 100%);
     border-top: 1px solid var(--border-light);
-    padding: 5rem 0 2.5rem;
+    padding: 4rem 0 0;
+    margin-top: 6rem;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+    opacity: 0.6;
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    gap: 5rem;
-    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    text-align: center;
 }
 
 .footer-brand {
-    max-width: 300px;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.footer-brand .logo {
+    height: 56px;
+    margin-bottom: 1.25rem;
+    display: inline-flex;
+}
+
+.footer-brand .logo-img {
+    height: 100%;
+    width: auto;
 }
 
 .footer-tagline {
     color: var(--text-secondary);
-    margin-top: 1rem;
-    font-size: 0.9375rem;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-weight: 500;
+    margin: 0;
+}
+
+.footer-bottom {
+    padding: 2rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
 }
 
 .footer-links {
@@ -2074,14 +2360,6 @@ section.visible {
 
 .footer-column a:hover {
     color: var(--primary);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--border-light);
-    color: var(--text-muted);
-    font-size: 0.875rem;
 }
 
 /* Animations */
@@ -2181,15 +2459,6 @@ section.visible {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-
-    .footer-links {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
 
     .hero-title {
         font-size: 3rem;
@@ -2236,6 +2505,11 @@ section.visible {
     .hero-container {
         padding: 0 1.5rem;
     }
+    
+    .operator-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
 
     .hero-cta {
         margin-bottom: 3rem;
@@ -2254,10 +2528,6 @@ section.visible {
     
     .stat-divider {
         display: none;
-    }
-
-    .operator-grid {
-        grid-template-columns: 1fr;
     }
     
     .standard-prices-grid {
@@ -2291,6 +2561,15 @@ section.visible {
         gap: 1.5rem;
     }
     
+    .warning-callback-form {
+        padding: 1.5rem;
+    }
+    
+    .callback-form {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
     .warning-benefits {
         margin: 1.5rem 0;
     }
@@ -2314,5 +2593,26 @@ section.visible {
     
     .cta-title {
         font-size: 2.25rem;
+    }
+    
+    .footer {
+        margin-top: 4rem;
+        padding-top: 3rem;
+    }
+    
+    .footer-content {
+        padding-bottom: 2.5rem;
+    }
+    
+    .footer-brand .logo {
+        height: 48px;
+    }
+    
+    .footer-tagline {
+        font-size: 1rem;
+    }
+    
+    .footer-bottom {
+        padding: 1.5rem 1.5rem;
     }
 }

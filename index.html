@@ -3,14 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobilkollen - Se om du betalar för mycket för mobilen</title>
-    <meta name="description" content="Betalar du för mycket för ditt mobilabonnemang? Kolla vad du betalar idag – vi ringer upp dig med ett bättre erbjudande.">
+    <title>Billigt mobilabonnemang – Jämför pris & se om du betalar för mycket | Mobilkollen</title>
+    <meta name="description" content="Jämför mobilabonnemang och se vad du betalar idag. Hitta billigt mobilabonnemang – kolla pris på 30 sekunder. Vi ringer upp dig med ett bättre erbjudande. Gratis.">
+    <meta name="keywords" content="billigt mobilabonnemang, jämför mobilabonnemang, mobilabonnemang pris, byt mobilabonnemang, spara på mobilabonnemang, mobilabonnemang jämförelse, vad betalar jag mobil">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mobilkollen.se/">
+    <link rel="icon" href="FAVICONMOBIL.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="FAVICONMOBIL.svg">
+    <meta name="theme-color" content="#00CE78">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sv_SE">
+    <meta property="og:title" content="Billigt mobilabonnemang – Jämför pris | Mobilkollen">
+    <meta property="og:description" content="Jämför mobilabonnemang och se om du betalar för mycket. Kolla ditt pris på 30 sekunder – vi ringer upp dig med ett bättre erbjudande.">
+    <meta property="og:url" content="https://mobilkollen.se/">
+    <meta property="og:image" content="https://mobilkollen.se/og-image.jpg">
+    <meta property="og:site_name" content="Mobilkollen">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Billigt mobilabonnemang – Jämför pris | Mobilkollen">
+    <meta name="twitter:description" content="Jämför mobilabonnemang och se vad du betalar. Kolla pris på 30 sekunder – gratis.">
+    <meta name="twitter:image" content="https://mobilkollen.se/og-image.jpg">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Mobilkollen",
+        "description": "Jämför mobilabonnemang och se om du betalar för mycket. Kolla pris på ditt mobilabonnemang – billigt och enkelt.",
+        "url": "https://mobilkollen.se/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" }
+    }
+    </script>
 </head>
 <body>
+    <a href="#compare" class="skip-link">Hoppa till innehåll – Se mitt pris</a>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -19,7 +51,6 @@
             </div>
             <div class="nav-links">
                 <a href="#how-it-works">Så funkar det</a>
-                <a href="#compare">Kolla pris</a>
                 <a href="#features">Fördelar</a>
                 <button class="nav-cta">Se mitt pris</button>
             </div>
@@ -43,7 +74,7 @@
                     för ditt mobilabonnemang
                 </h1>
                 <p class="hero-description">
-                    Kolla vad du betalar idag. Vill du spara? Vi ringer upp dig med ett bättre abonnemang 
+                    Se vad du betalar idag. Vill du spara? Vi ringer upp dig med ett bättre abonnemang 
                     som passar dina behov – helt kostnadsfritt.
                 </p>
                 <div class="hero-cta">
@@ -83,7 +114,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">Mobilkollen</div>
-                        <div class="card-subtitle">Kollar ditt pris...</div>
+                        <div class="card-subtitle">Ser ditt pris...</div>
                         <div class="card-progress">
                             <div class="progress-bar"></div>
                         </div>
@@ -150,7 +181,7 @@
                                 <path d="m21 21-4.35-4.35"/>
                             </svg>
                         </div>
-                        <h3 class="step-title">Vi kollar vad du betalar</h3>
+                        <h3 class="step-title">Vi visar vad du betalar</h3>
                         <p class="step-description">Vi ser vad ditt abonnemang kostar idag och hur det jämför sig med marknaden.</p>
                         <div class="step-time">~2 sekunder</div>
                     </div>
@@ -181,7 +212,7 @@
     <section class="comparison" id="compare">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Kolla ditt pris</span>
+                <span class="section-label">Se vad du betalar</span>
                 <h2 class="section-title">Se vad du betalar idag</h2>
                 <p class="section-subtitle">Berätta om ditt abonnemang – vi visar vad du betalar. Vill du spara? Bli uppringd för ett bättre erbjudande.</p>
             </div>
@@ -195,14 +226,6 @@
                     </div>
                     <div class="form-section">
                         <label class="form-label">Vilken operatör har du idag?</label>
-                        <div class="detected-operator" id="detected-operator" style="display: none;">
-                            <div class="detected-badge">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                <span>Vi hittade din operatör: <strong id="detected-operator-name"></strong></span>
-                            </div>
-                        </div>
                         <div class="operator-grid">
                             <button class="operator-btn" data-operator="Telia">
                                 <div class="operator-name">Telia</div>
@@ -241,55 +264,6 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="phone-section-inline">
-                        <div class="phone-divider">
-                            <span>eller</span>
-                        </div>
-                        <div class="phone-input-inline-wrapper">
-                            <div class="phone-input-wrapper">
-                                <div class="phone-prefix">+46</div>
-                                <input type="tel" id="phone-number-inline" class="phone-input" placeholder="70 123 45 67" maxlength="12">
-                            </div>
-                            <button class="btn-secondary phone-detect-inline-btn" id="phone-detect-inline-btn">
-                                <span>Hitta min operatör</span>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="phone-hint">Vi använder ditt nummer endast för att identifiera din operatör</div>
-                    </div>
-                </div>
-
-                <!-- Phone Number Detection Section -->
-                <div class="comparison-form hidden" id="phone-form">
-                    <div class="form-progress">
-                        <div class="progress-step completed">1</div>
-                        <div class="progress-line active"></div>
-                        <div class="progress-step active">2</div>
-                    </div>
-                    <div class="form-section">
-                        <label class="form-label">Ange ditt telefonnummer för att se din operatör</label>
-                        <div class="phone-input-wrapper">
-                            <div class="phone-prefix">+46</div>
-                            <input type="tel" id="phone-number" class="phone-input" placeholder="70 123 45 67" maxlength="12">
-                        </div>
-                        <div class="phone-hint">Vi använder ditt nummer endast för att identifiera din operatör</div>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn-secondary" id="phone-back-btn">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Tillbaka</span>
-                        </button>
-                        <button class="compare-btn" id="phone-detect-btn">
-                            <span>Hitta min operatör</span>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
 
                 <!-- Step 2: Data Usage -->
@@ -322,7 +296,7 @@
                             <span>Tillbaka</span>
                         </button>
                         <button class="compare-btn" id="step2-btn">
-                            <span>Se mitt pris &amp; bli uppringd</span>
+                            <span>Se mitt pris</span>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -364,7 +338,7 @@
                         </svg>
                     </div>
                     <h3 class="feature-title">100% gratis</h3>
-                    <p class="feature-description">Kolla priset kostar inget. Uppringningen och hjälpen till bättre abonnemang är också gratis.</p>
+                    <p class="feature-description">Se vad du betalar – kostar inget. Uppringningen och hjälpen till bättre abonnemang är också gratis.</p>
                     <div class="feature-badge">För alltid</div>
                 </div>
                 <div class="feature-card">
@@ -404,29 +378,9 @@
                     </div>
                     <p class="footer-tagline">Se om du betalar för mycket – bli uppringd för ett bättre abonnemang</p>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4 class="footer-heading">Produkt</h4>
-                        <a href="#how-it-works">Så funkar det</a>
-                        <a href="#compare">Kolla pris</a>
-                        <a href="#features">Fördelar</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4 class="footer-heading">Support</h4>
-                        <a href="#">Hjälpcenter</a>
-                        <a href="#">Kontakt</a>
-                        <a href="#">FAQ</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4 class="footer-heading">Juridik</h4>
-                        <a href="#">Integritetspolicy</a>
-                        <a href="#">Villkor</a>
-                        <a href="#">Cookies</a>
-                    </div>
-                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Mobilkollen. Alla rättigheter förbehållna.</p>
+                <p>&copy; 2026 Mobilkollen. Alla rättigheter förbehållna.</p>
             </div>
         </div>
     </footer>

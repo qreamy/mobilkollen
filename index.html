@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobilkollen - Se om du betalar för mycket för mobilen</title>
+    <meta name="description" content="Betalar du för mycket för ditt mobilabonnemang? Kolla vad du betalar idag – vi ringer upp dig med ett bättre erbjudande.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="logo.svg" alt="Mobilkollen" class="logo-img">
+            </div>
+            <div class="nav-links">
+                <a href="#how-it-works">Så funkar det</a>
+                <a href="#compare">Kolla pris</a>
+                <a href="#features">Fördelar</a>
+                <button class="nav-cta">Se mitt pris</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+            <div class="hero-pattern"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Betalar du för mycket?</span>
+                </div>
+                <h1 class="hero-title">
+                    Se om du betalar <span class="highlight">för mycket</span><br>
+                    för ditt mobilabonnemang
+                </h1>
+                <p class="hero-description">
+                    Kolla vad du betalar idag. Vill du spara? Vi ringer upp dig med ett bättre abonnemang 
+                    som passar dina behov – helt kostnadsfritt.
+                </p>
+                <div class="hero-cta">
+                    <button class="cta-primary" id="start-check-btn">
+                        <span>Se vad jag betalar</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-suffix">K+</div>
+                        <div class="stat-label">Nöjda kunder</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="30">0</div>
+                        <div class="stat-suffix">%</div>
+                        <div class="stat-label">Genomsnittlig besparing</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="2">0</div>
+                        <div class="stat-suffix">s</div>
+                        <div class="stat-label">Snabb koll</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-card main-card">
+                    <div class="card-header">
+                        <div class="card-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Mobilkollen</div>
+                        <div class="card-subtitle">Kollar ditt pris...</div>
+                        <div class="card-progress">
+                            <div class="progress-bar"></div>
+                        </div>
+                        <div class="card-results">
+                            <div class="result-item">
+                                <span class="result-label">Bästa priset</span>
+                                <span class="result-value">199 kr/mån</span>
+                            </div>
+                            <div class="result-item highlight">
+                                <span class="result-label">Du sparar</span>
+                                <span class="result-value">129 kr/mån</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-card floating-card-1">
+                    <div class="mini-stat">
+                        <div class="mini-value">50K+</div>
+                        <div class="mini-label">Nöjda kunder</div>
+                    </div>
+                </div>
+                <div class="visual-card floating-card-2">
+                    <div class="mini-stat">
+                        <div class="mini-value">30%</div>
+                        <div class="mini-label">Besparing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Process</span>
+                <h2 class="section-title">Så enkelt är det</h2>
+                <p class="section-subtitle">Tre steg – sedan ringer vi upp dig med ett bättre erbjudande</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <div class="step-icon-wrapper">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Berätta om ditt användande</h3>
+                        <p class="step-description">Svara på några enkla frågor om hur du använder din mobil. Det tar bara några sekunder.</p>
+                        <div class="step-time">~30 sekunder</div>
+                    </div>
+                </div>
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">→</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <div class="step-icon-wrapper">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Vi kollar vad du betalar</h3>
+                        <p class="step-description">Vi ser vad ditt abonnemang kostar idag och hur det jämför sig med marknaden.</p>
+                        <div class="step-time">~2 sekunder</div>
+                    </div>
+                </div>
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <div class="connector-arrow">→</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <div class="step-icon-wrapper">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="step-title">Bli uppringd med ett bättre erbjudande</h3>
+                        <p class="step-description">Vill du spara? Ange ditt nummer så ringer vi upp dig med ett abonnemang som passar dig bättre.</p>
+                        <div class="step-time">Du bestämmer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Tool -->
+    <section class="comparison" id="compare">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Kolla ditt pris</span>
+                <h2 class="section-title">Se vad du betalar idag</h2>
+                <p class="section-subtitle">Berätta om ditt abonnemang – vi visar vad du betalar. Vill du spara? Bli uppringd för ett bättre erbjudande.</p>
+            </div>
+            <div class="comparison-wrapper">
+                <!-- Step 1: Current Operator -->
+                <div class="comparison-form" id="step1-form">
+                    <div class="form-progress">
+                        <div class="progress-step active">1</div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step">2</div>
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Vilken operatör har du idag?</label>
+                        <div class="detected-operator" id="detected-operator" style="display: none;">
+                            <div class="detected-badge">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Vi hittade din operatör: <strong id="detected-operator-name"></strong></span>
+                            </div>
+                        </div>
+                        <div class="operator-grid">
+                            <button class="operator-btn" data-operator="Telia">
+                                <div class="operator-name">Telia</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Telenor">
+                                <div class="operator-name">Telenor</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Tre">
+                                <div class="operator-name">Tre</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Tele2">
+                                <div class="operator-name">Tele2</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Hallon">
+                                <div class="operator-name">Hallon</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Vimla">
+                                <div class="operator-name">Vimla</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Comviq">
+                                <div class="operator-name">Comviq</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Fello">
+                                <div class="operator-name">Fello</div>
+                            </button>
+                            <button class="operator-btn" data-operator="Halebop">
+                                <div class="operator-name">Halebop</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="continue-btn-wrapper">
+                        <button class="compare-btn large" id="step1-btn" disabled>
+                            <span>Fortsätt</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="phone-section-inline">
+                        <div class="phone-divider">
+                            <span>eller</span>
+                        </div>
+                        <div class="phone-input-inline-wrapper">
+                            <div class="phone-input-wrapper">
+                                <div class="phone-prefix">+46</div>
+                                <input type="tel" id="phone-number-inline" class="phone-input" placeholder="70 123 45 67" maxlength="12">
+                            </div>
+                            <button class="btn-secondary phone-detect-inline-btn" id="phone-detect-inline-btn">
+                                <span>Hitta min operatör</span>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="phone-hint">Vi använder ditt nummer endast för att identifiera din operatör</div>
+                    </div>
+                </div>
+
+                <!-- Phone Number Detection Section -->
+                <div class="comparison-form hidden" id="phone-form">
+                    <div class="form-progress">
+                        <div class="progress-step completed">1</div>
+                        <div class="progress-line active"></div>
+                        <div class="progress-step active">2</div>
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Ange ditt telefonnummer för att se din operatör</label>
+                        <div class="phone-input-wrapper">
+                            <div class="phone-prefix">+46</div>
+                            <input type="tel" id="phone-number" class="phone-input" placeholder="70 123 45 67" maxlength="12">
+                        </div>
+                        <div class="phone-hint">Vi använder ditt nummer endast för att identifiera din operatör</div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-secondary" id="phone-back-btn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Tillbaka</span>
+                        </button>
+                        <button class="compare-btn" id="phone-detect-btn">
+                            <span>Hitta min operatör</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Data Usage -->
+                <div class="comparison-form hidden" id="step2-form">
+                    <div class="form-progress">
+                        <div class="progress-step completed">1</div>
+                        <div class="progress-line active"></div>
+                        <div class="progress-step active">2</div>
+                    </div>
+                    <div class="form-section">
+                        <label class="form-label">Hur mycket surf/data har du i ditt abonnemang?</label>
+                        <div class="data-options-wrapper">
+                            <div class="data-input-wrapper">
+                                <input type="number" id="data-amount" class="data-input" placeholder="T.ex. 20" min="1" max="1000">
+                                <span class="data-unit">GB</span>
+                            </div>
+                            <button class="data-option-btn" id="data-unlimited-btn" data-value="unlimited">
+                                <div class="operator-name">Obegränsat</div>
+                            </button>
+                            <button class="data-option-btn" id="data-unknown-btn" data-value="unknown">
+                                <div class="operator-name">Vet inte</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-secondary" id="step2-back">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Tillbaka</span>
+                        </button>
+                        <button class="compare-btn" id="step2-btn">
+                            <span>Se mitt pris &amp; bli uppringd</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results: Current Price & Comparison -->
+                <div class="results-container hidden" id="results-container">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Fördelar</span>
+                <h2 class="section-title">Varför välja Mobilkollen?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Snabb koll</h3>
+                    <p class="feature-description">Se på sekunder vad du betalar idag. Ingen krångel – bara svar.</p>
+                    <div class="feature-badge">2 sekunder</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">100% gratis</h3>
+                    <p class="feature-description">Kolla priset kostar inget. Uppringningen och hjälpen till bättre abonnemang är också gratis.</p>
+                    <div class="feature-badge">För alltid</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Bli uppringd – du sparar tid</h3>
+                    <p class="feature-description">Vi ringer upp dig med ett bättre erbjudande. Du behöver inte leta själv.</p>
+                    <div class="feature-badge">Vi fixar</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"/>
+                            <polyline points="1 20 1 14 7 14"/>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Rätt pris för dig</h3>
+                    <p class="feature-description">Vi hjälper dig till ett abonnemang som passar – och ett samtal som kan spara dig pengar.</p>
+                    <div class="feature-badge">Personlig hjälp</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <img src="logo.svg" alt="Mobilkollen" class="logo-img">
+                    </div>
+                    <p class="footer-tagline">Se om du betalar för mycket – bli uppringd för ett bättre abonnemang</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Produkt</h4>
+                        <a href="#how-it-works">Så funkar det</a>
+                        <a href="#compare">Kolla pris</a>
+                        <a href="#features">Fördelar</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Support</h4>
+                        <a href="#">Hjälpcenter</a>
+                        <a href="#">Kontakt</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 class="footer-heading">Juridik</h4>
+                        <a href="#">Integritetspolicy</a>
+                        <a href="#">Villkor</a>
+                        <a href="#">Cookies</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mobilkollen. Alla rättigheter förbehållna.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

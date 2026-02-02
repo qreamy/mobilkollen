@@ -383,12 +383,49 @@ function showResults(operatorName, dataAmount) {
     `;
     resultsContainer.appendChild(warningCard);
     
-    document.getElementById('callback-form')?.addEventListener('submit', (e) => {
+    document.getElementById('callback-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const fornamn = document.getElementById('callback-fornamn').value.trim();
-        const mobil = document.getElementById('callback-mobil').value.trim();
+        const fornamnInput = document.getElementById('callback-fornamn');
+        const mobilInput = document.getElementById('callback-mobil');
+        const submitBtn = document.getElementById('contact-btn');
+        const fornamn = fornamnInput.value.trim();
+        let mobil = mobilInput.value.trim().replace(/\s/g, '');
         if (!fornamn || !mobil) return;
-        alert('Tack ' + fornamn + '! Vi ringer upp dig på ' + mobil + ' snart med ett bättre erbjudande.');
+        if (mobil.startsWith('0')) mobil = '+46' + mobil.slice(1);
+        else if (!mobil.startsWith('+')) mobil = '+46' + mobil;
+
+        const dataMangdLabel = dataAmount >= 1000 ? 'Obegränsat' : dataAmount + ' GB';
+        const formData = new URLSearchParams({
+            'form-name': 'callback',
+            'fornamn': fornamn,
+            'mobil': mobil,
+            'operatör': operatorName,
+            'data_mangd': dataMangdLabel,
+            'nuvarande_pris': currentPrice + ' kr/mån',
+            'potentiell_besparing': (potentialSavings > 0 ? potentialSavings + ' kr/mån' : '0 kr/mån'),
+            'bot-field': ''
+        });
+
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Skickar...</span>';
+
+        try {
+            const res = await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            });
+            if (!res.ok) throw new Error('Nätverksfel');
+            submitBtn.innerHTML = '<span>Tack – vi ringer dig snart!</span>';
+            submitBtn.classList.add('success');
+            fornamnInput.disabled = true;
+            mobilInput.disabled = true;
+        } catch (err) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            alert('Något gick fel. Ring oss gärna istället eller försök igen om en stund.');
+        }
     });
     
     document.getElementById('edit-from-results-btn')?.addEventListener('click', () => {

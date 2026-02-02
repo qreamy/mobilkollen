@@ -385,6 +385,20 @@
         </div>
     </footer>
 
+    <!-- Hidden form for Netlify Forms – samlar abonnemang + uppringningsönskan -->
+    <form name="callback" id="netlify-form-callback" data-netlify="true" netlify-honeypot="bot-field" aria-hidden="true" class="netlify-form-hidden">
+        <input type="hidden" name="form-name" value="callback">
+        <input type="hidden" name="operatör" id="nf-operatör">
+        <input type="hidden" name="data_mangd" id="nf-data_mangd">
+        <input type="hidden" name="nuvarande_pris" id="nf-nuvarande_pris">
+        <input type="hidden" name="potentiell_besparing" id="nf-potentiell_besparing">
+        <p class="netlify-honeypot">
+            <label>Lämna tom: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <input type="text" name="fornamn">
+        <input type="tel" name="mobil">
+    </form>
+
     <script src="script.js"></script>
 </body>
 </html>
